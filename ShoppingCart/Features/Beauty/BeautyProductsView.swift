@@ -12,7 +12,7 @@ struct BeautyProductsView: View {
     
     var body: some View {
         NavigationStack(path: $beautyNavPath) {
-            ProductListView()
+            ProductListView(segment: .beauty)
                 .navigationTitle("Beauty Products")
         }
     }

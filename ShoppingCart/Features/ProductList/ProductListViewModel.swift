@@ -19,9 +19,33 @@ class ProductListViewModel: ObservableObject {
         self.segment = segment
     }
     
+    @MainActor
     func getProducts() {
+        let category: String
+        switch segment {
+        case .beauty:
+            category = "beauty"
+        case .Groceries:
+            category = "groceries"
+        case .furniture:
+            category = "furniture"
+        }
+        
+        guard let url = URL(string: "https://dummyjson.com/products/category/\(category)") else {
+            return
+        }
+        
         isLoading = true
-        products = MockGenerator.getMockProducts()
-        isLoading = false
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decodedResponse = try JSONDecoder().decode(ProductResponse.self, from: data)
+                self.products = decodedResponse.products
+                self.isLoading = false
+            } catch {
+                print("Error fetching products (\(category)): \(error)")
+                self.isLoading = false
+            }
+        }
     }
 }

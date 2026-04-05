@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct FurnitureView: View {
+    @State var furnitureNavPath: NavigationPath = NavigationPath()
+    
     var body: some View {
-        Text("Furtniture")
+        NavigationStack(path: $furnitureNavPath) {
+            ProductListView(segment: .furniture)
+                .navigationTitle("Furniture")
+        }
     }
 }
 

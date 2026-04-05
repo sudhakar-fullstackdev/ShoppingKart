@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct GroceriesView: View {
+    @State var groceriesNavPath: NavigationPath = NavigationPath()
+    
     var body: some View {
-        Text("Grocieries")
+        NavigationStack(path: $groceriesNavPath) {
+            ProductListView(segment: .Groceries)
+                .navigationTitle("Groceries")
+        }
     }
 }
 

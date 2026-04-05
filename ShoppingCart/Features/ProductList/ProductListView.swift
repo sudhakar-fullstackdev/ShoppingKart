@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct ProductListView: View {
-    @StateObject var productListViewModel: ProductListViewModel = ProductListViewModel(segment: .beauty)
+    @StateObject var productListViewModel: ProductListViewModel
+    
+    init(segment: ProductSegment) {
+        _productListViewModel = StateObject(wrappedValue: ProductListViewModel(segment: segment))
+    }
     
     var body: some View {
         List(productListViewModel.products) { product in
@@ -61,6 +65,14 @@ struct ProductListView: View {
                 CartView()
             }
         }
+        .overlay {
+            if productListViewModel.isLoading {
+                ProgressView("Fetching...")
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(12)
+            }
+        }
         .onAppear() {
             self.productListViewModel.getProducts()
         }
@@ -68,5 +80,5 @@ struct ProductListView: View {
 }
 
 #Preview {
-    ProductListView()
+    ProductListView(segment: .beauty)
 }
