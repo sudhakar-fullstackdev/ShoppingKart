@@ -62,9 +62,14 @@ struct ProductDetailView: View {
                         .lineSpacing(4)
                 }
                 .padding(.horizontal)
-                
-                Spacer()
-                
+            }
+        }
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 0) {
+                Divider()
                 Button(action: {
                     // Add to cart logic
                 }) {
@@ -75,12 +80,12 @@ struct ProductDetailView: View {
                         .padding()
                         .background(Color.accentColor)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .shadow(color: .accentColor.opacity(0.3), radius: 10, x: 0, y: 5)
                 }
                 .padding()
+                .background(.ultraThinMaterial)
             }
         }
-        .navigationTitle("Details")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
